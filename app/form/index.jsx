@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
 
-export default function form() {
+export default function Caculator() {
   const [courses, setCourses] = useState([]); // State để lưu thông tin môn học
 
   const [courseInfo, setCourseInfo] = useState({

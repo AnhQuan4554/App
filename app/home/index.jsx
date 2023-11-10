@@ -1,12 +1,16 @@
-import { View, Text } from "react-native";
+import { View, Text, Button } from "react-native";
 import React from "react";
-import { Button } from "react-native-web";
+// import { View, Text, Button } from "react-native";
+// import { NavigationContainer } from "@react-navigation/native";
 
-export default function home() {
+export default function Home({ navigation }) {
   return (
     <View>
       <Text>home</Text>
-      <Button>okokko</Button>
+      <Button
+        title="okokko"
+        onPress={() => navigation.navigate("calculator")}
+      />
     </View>
   );
 }
