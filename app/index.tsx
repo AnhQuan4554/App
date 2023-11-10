@@ -103,7 +103,7 @@ export default function form() {
 
       <Text style={styles.header}>Danh sách các môn học:</Text>
 
-      {courses.map((course, index) => (
+      {courses.map((course: any, index: any) => (
         <View key={index}>
           <Text>Tên môn học: {course.name}</Text>
           <Text>Số tín chỉ: {course.credit}</Text>
