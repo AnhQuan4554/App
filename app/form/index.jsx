@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
 
 export default function form() {
-  const [courses, setCourses] = useState<any>([]); // State để lưu thông tin môn học
+  const [courses, setCourses] = useState([]); // State để lưu thông tin môn học
 
   const [courseInfo, setCourseInfo] = useState({
     name: "",
@@ -11,7 +11,7 @@ export default function form() {
     instructor: "",
     score: "",
   }); // State để lưu thông tin từng môn học
-  const handleChange = (key: any, value: any) => {
+  const handleChange = (key, value) => {
     setCourseInfo({ ...courseInfo, [key]: value });
   };
 
@@ -103,7 +103,7 @@ export default function form() {
 
       <Text style={styles.header}>Danh sách các môn học:</Text>
 
-      {courses.map((course: any, index: any) => (
+      {courses.map((course, index) => (
         <View key={index}>
           <Text>Tên môn học: {course.name}</Text>
           <Text>Số tín chỉ: {course.credit}</Text>
