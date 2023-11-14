@@ -8,7 +8,7 @@ import {
   Image,
 } from "react-native";
 import React, { useState } from "react";
-import Header from "./Header";
+import Header from "../../components/Header";
 
 const Wishlist = () => {
   // const [wishlistItems, setWishlistItems] = useState(items.data);

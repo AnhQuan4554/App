@@ -3,10 +3,10 @@ import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
 import Main from "./Main";
-// import ProductDetail from './screens/ProductDetail';
-// import Cart from './screens/Cart';
+import ProductDetail from "./screens/ProductDetail";
+import Cart from "./screens/Cart";
 // import Login from './screens/Login';
-// import Signup from './screens/Signup';
+import Signup from "./screens/User/Signup";
 // import Checkout from './screens/Checkout';
 // import Addresses from './screens/Addresses';
 // import AddAddress from './screens/AddAddress';
@@ -22,26 +22,26 @@ const AppNavigator = () => {
           component={Main}
           options={{ headerShown: false }}
         />
-        {/* <Stack.Screen
+        <Stack.Screen
           name="ProductDetail"
           component={ProductDetail}
-          options={{headerShown: false}}
-        /> */}
-        {/* <Stack.Screen
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
           name="Cart"
           component={Cart}
-          options={{headerShown: false}}
-        /> */}
+          options={{ headerShown: false }}
+        />
         {/* <Stack.Screen
           name="Login"
           component={Login}
           options={{headerShown: false}}
         /> */}
-        {/* <Stack.Screen
+        <Stack.Screen
           name="Signup"
           component={Signup}
-          options={{headerShown: false}}
-        /> */}
+          options={{ headerShown: false }}
+        />
         {/* <Stack.Screen
           name="Checkout"
           component={Checkout}

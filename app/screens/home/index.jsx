@@ -8,12 +8,12 @@ import {
   Keyboard,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import Home from "../../../components/Home";
+import Home from "../Home";
 import Search from "../../../components/Search";
-import Wishlist from "../../../components/Wishlist";
-import Notification from "../../../components/Notification";
+import Wishlist from "../Wishlist";
+import Notification from "../Notification";
 import User from "../User";
-
+import axios from "axios";
 const HomeScreen = () => {
   const [selectedTab, setSelectedTab] = useState(0);
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
@@ -36,6 +36,14 @@ const HomeScreen = () => {
       keyboardDidShowListener.remove();
     };
   }, []);
+  const fetchUser = async () => {
+    const url = `${process.env.domain}/product/9`;
+    const response = await axios.get(url);
+    console.log("data nhan dc", response.data);
+  };
+  useEffect(() => {
+    fetchUser();
+  });
   return (
     <View style={styles.container}>
       {selectedTab == 0 ? (

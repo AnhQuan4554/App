@@ -8,9 +8,10 @@ import {
   TouchableOpacity,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-// import { useNavigation } from "@react-navigation/native";
-import Header from "./Header";
-const Home = ({}) => {
+import { useNavigation } from "@react-navigation/native";
+import Header from "../../components/Header";
+const Home = () => {
+  const navigation = useNavigation();
   const [products, setProducts] = useState([
     {
       image:
@@ -52,8 +53,8 @@ const Home = ({}) => {
   return (
     <View style={styles.container}>
       <Header
-        leftIcon={require("../assets/images/menu.png")}
-        rightIcon={require("../assets/images/cart.png")}
+        leftIcon={require("../../assets/images/menu.png")}
+        rightIcon={require("../../assets/images/cart.png")}
         title={"Grocery App"}
         onClickLeftIcon={() => {
           navigation.openDrawer();
@@ -69,8 +70,7 @@ const Home = ({}) => {
               style={styles.productItem}
               key={index}
               onPress={() => {
-                // navigation.navigate('ProductDetail', {data: item});
-                // navigation.navigate("ProductDetail", {data: item})
+                navigation.navigate("ProductDetail", { data: item });
               }}
             >
               <Image source={{ uri: item.image }} style={styles.itemImage} />

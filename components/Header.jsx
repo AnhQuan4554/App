@@ -1,5 +1,6 @@
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import React from "react";
+import { useNavigation } from "@react-navigation/native";
 // const { height, width } = Dimensions.get("window");
 const Header = ({
   title,
@@ -9,6 +10,8 @@ const Header = ({
   onClickRightIcon,
   isCart,
 }) => {
+  const navigation = useNavigation();
+
   //   const cartItems = useSelector((state) => state.cart);
   //   console.log(cartItems);
   return (
@@ -61,7 +64,7 @@ const styles = StyleSheet.create({
   header: {
     width: 10,
     height: 65,
-    backgroundColor: "#0786DAFD",
+    backgroundColor: "transparent",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",

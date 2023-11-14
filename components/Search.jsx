@@ -15,6 +15,7 @@ const Search = () => {
   // const products = useSelector(state => state);
   const [search, setSearch] = useState("");
   // const [oldData, setOldData] = useState(products.product.data);
+  // old Data  Data chuyen tu sql veef
   const [oldData, setOldData] = useState([
     {
       image:
@@ -25,12 +26,13 @@ const Search = () => {
     },
   ]);
   const [searchedList, setSearchedList] = useState(oldData);
-  // const filterData = txt => {
-  //   let newData = oldData.filter(item => {
-  //     return item.title.toLowerCase().match(txt.toLowerCase());
-  //   });
-  //   setSearchedList(newData);
-  // };
+  const filterData = (txt) => {
+    let newData = oldData.filter((item) => {
+      return item.title.toLowerCase().match(txt.toLowerCase());
+    });
+    console.log("newData", newData);
+    setSearchedList(newData);
+  };
 
   return (
     <View style={styles.container}>
