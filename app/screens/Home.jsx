@@ -15,7 +15,7 @@ const Home = () => {
   const [products, setProducts] = useState([
     {
       image:
-        "https://anhdepfree.com/wp-content/uploads/2018/12/hinh-nen-phong-canh-thien-nhien-67.jpg",
+        "https://images.unsplash.com/photo-1575936123452-b67c3203c357?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D",
       title: "Day la cai lol qu gi",
       description: "Test descriptiondescriptiondes",
       price: 1000,
@@ -74,6 +74,7 @@ const Home = () => {
               }}
             >
               <Image source={{ uri: item.image }} style={styles.itemImage} />
+
               <View>
                 <Text style={styles.name}>
                   {item.title.length > 25
