@@ -8,32 +8,27 @@ import {
   FlatList,
   Dimensions,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "./Header";
 
-const Search = () => {
+const Search = ({ arrProduct }) => {
   // const products = useSelector(state => state);
   const [search, setSearch] = useState("");
   // const [oldData, setOldData] = useState(products.product.data);
-  // old Data  Data chuyen tu sql veef
-  const [oldData, setOldData] = useState([
-    {
-      image:
-        "https://anhdepfree.com/wp-content/uploads/2018/12/hinh-nen-phong-canh-thien-nhien-67.jpg",
-      title: "test Search",
-      description: "test description!!",
-      price: 309,
-    },
-  ]);
+
+  const [oldData, setOldData] = useState(arrProduct && arrProduct);
+
   const [searchedList, setSearchedList] = useState(oldData);
   const filterData = (txt) => {
     let newData = oldData.filter((item) => {
       return item.title.toLowerCase().match(txt.toLowerCase());
     });
-    console.log("newData", newData);
+
     setSearchedList(newData);
   };
-
+  useEffect(() => {
+    setOldData(arrProduct);
+  }, [arrProduct]);
   return (
     <View style={styles.container}>
       <Header title={"Search Items"} />

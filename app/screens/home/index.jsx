@@ -16,6 +16,7 @@ import User from "../User";
 import axios from "axios";
 const HomeScreen = () => {
   const [selectedTab, setSelectedTab] = useState(0);
+  const [arrProduct, setarrProduct] = useState([]);
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
@@ -37,19 +38,21 @@ const HomeScreen = () => {
     };
   }, []);
   const fetchUser = async () => {
-    const url = `${process.env.domain}/product/9`;
+    console.log("env1", process.env.domain);
+    const url = `${process.env.domain}/product`;
     const response = await axios.get(url);
-    console.log("data nhan dc", response.data);
+    response.data && setarrProduct(response.data);
+    response.data && console.log("arrData1", arrProduct);
   };
   useEffect(() => {
     fetchUser();
-  });
+  }, []);
   return (
     <View style={styles.container}>
       {selectedTab == 0 ? (
-        <Home />
+        <Home arrProduct={arrProduct} />
       ) : selectedTab == 1 ? (
-        <Search />
+        <Search arrProduct={arrProduct} />
       ) : selectedTab == 2 ? (
         <Wishlist />
       ) : selectedTab == 3 ? (

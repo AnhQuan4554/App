@@ -1,21 +1,124 @@
 import React, { useState } from "react";
-import { View, Text, Image, FlatList, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  FlatList,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import Swipeout from "react-native-swipeout";
 
 const Notification = () => {
   const [notifications, setNotifications] = useState([
-    { id: 1, image: "https://frodos.com.vn/wp-content/uploads/2022/11/dr0-600x800.png.webp", title: "Cập nhật đơn hàng", description: "Đơn hàng Richard Mille RM57-01 Dragon and Phoenix Jackie Chan Tourbillon của bạn đã được vận chuyển. Bạn sẽ nhận được hàng trong 3-5 ngày tới.", dateTime: "2023-11-15 10:00" },
-    { id: 2, image: "https://static.patek.com/images/articles/gallery/2200/7118_1451G_001_8.jpg", title: "Cập nhật đơn hàng", description: "Đơn hàng Patek Philippe NAUTILUS 7118/1451G-001 của bạn đã tới nơi. Vui lòng kiểm tra và xác nhận.", dateTime: "2023-11-15 12:30" },
-    { id: 3, image: "https://luxuryhanoi.vn/admin/timthumb.php?src=img/product/20230221145212e6c439226a0bde3e060ac5ce39b7d0f2.png&w=460", title: "Cập nhật đơn hàng", description: "Đơn hàng Rolex Deepsea Challenge 126067 RLX Titanium của bạn đã bị hủy. Phí thanh toán sẽ được hoàn lại ví trong thời gian ngắn. Vui lòng kiểm tra và xác nhận.", dateTime: "2023-11-15 15:45" },
-    { id: 4, image: "https://frodos.com.vn/wp-content/uploads/2022/11/dr0-600x800.png.webp", title: "Cập nhật đơn hàng", description: "Đơn hàng Richard Mille RM57-01 Dragon and Phoenix Jackie Chan Tourbillon của bạn đã được vận chuyển. Bạn sẽ nhận được hàng trong 3-5 ngày tới.", dateTime: "2023-11-15 10:00" },
-    { id: 5, image: "https://static.patek.com/images/articles/gallery/2200/7118_1451G_001_8.jpg", title: "Cập nhật đơn hàng", description: "Đơn hàng Patek Philippe NAUTILUS 7118/1451G-001 của bạn đã tới nơi. Vui lòng kiểm tra và xác nhận.", dateTime: "2023-11-15 12:30" },
-    { id: 6, image: "https://luxuryhanoi.vn/admin/timthumb.php?src=img/product/20230221145212e6c439226a0bde3e060ac5ce39b7d0f2.png&w=460", title: "Cập nhật đơn hàng", description: "Đơn hàng Rolex Deepsea Challenge 126067 RLX Titanium của bạn đã bị hủy. Phí thanh toán sẽ được hoàn lại ví trong thời gian ngắn. Vui lòng kiểm tra và xác nhận.", dateTime: "2023-11-15 15:45" },
-    { id: 7, image: "https://frodos.com.vn/wp-content/uploads/2022/11/dr0-600x800.png.webp", title: "Cập nhật đơn hàng", description: "Đơn hàng Richard Mille RM57-01 Dragon and Phoenix Jackie Chan Tourbillon của bạn đã được vận chuyển. Bạn sẽ nhận được hàng trong 3-5 ngày tới.", dateTime: "2023-11-15 10:00" },
-    { id: 8, image: "https://static.patek.com/images/articles/gallery/2200/7118_1451G_001_8.jpg", title: "Cập nhật đơn hàng", description: "Đơn hàng Patek Philippe NAUTILUS 7118/1451G-001 của bạn đã tới nơi. Vui lòng kiểm tra và xác nhận.", dateTime: "2023-11-15 12:30" },
-    { id: 9, image: "https://luxuryhanoi.vn/admin/timthumb.php?src=img/product/20230221145212e6c439226a0bde3e060ac5ce39b7d0f2.png&w=460", title: "Cập nhật đơn hàng", description: "Đơn hàng Rolex Deepsea Challenge 126067 RLX Titanium của bạn đã bị hủy. Phí thanh toán sẽ được hoàn lại ví trong thời gian ngắn. Vui lòng kiểm tra và xác nhận.", dateTime: "2023-11-15 15:45" },
-    { id: 10, image: "https://frodos.com.vn/wp-content/uploads/2022/11/dr0-600x800.png.webp", title: "Cập nhật đơn hàng", description: "Đơn hàng Richard Mille RM57-01 Dragon and Phoenix Jackie Chan Tourbillon của bạn đã được vận chuyển. Bạn sẽ nhận được hàng trong 3-5 ngày tới.", dateTime: "2023-11-15 10:00" },
-    { id: 11, image: "https://static.patek.com/images/articles/gallery/2200/7118_1451G_001_8.jpg", title: "Cập nhật đơn hàng", description: "Đơn hàng Patek Philippe NAUTILUS 7118/1451G-001 của bạn đã tới nơi. Vui lòng kiểm tra và xác nhận.", dateTime: "2023-11-15 12:30" },
-    { id: 12, image: "https://luxuryhanoi.vn/admin/timthumb.php?src=img/product/20230221145212e6c439226a0bde3e060ac5ce39b7d0f2.png&w=460", title: "Cập nhật đơn hàng", description: "Đơn hàng Rolex Deepsea Challenge 126067 RLX Titanium của bạn đã bị hủy. Phí thanh toán sẽ được hoàn lại ví trong thời gian ngắn. Vui lòng kiểm tra và xác nhận.", dateTime: "2023-11-15 15:45" },
+    {
+      id: 1,
+      image:
+        "https://frodos.com.vn/wp-content/uploads/2022/11/dr0-600x800.png.webp",
+      title: "Cập nhật đơn hàng",
+      description:
+        "Đơn hàng Richard Mille RM57-01 Dragon and Phoenix Jackie Chan Tourbillon của bạn đã được vận chuyển. Bạn sẽ nhận được hàng trong 3-5 ngày tới.",
+      dateTime: "2023-11-15 10:00",
+    },
+    {
+      id: 2,
+      image:
+        "https://static.patek.com/images/articles/gallery/2200/7118_1451G_001_8.jpg",
+      title: "Cập nhật đơn hàng",
+      description:
+        "Đơn hàng Patek Philippe NAUTILUS 7118/1451G-001 của bạn đã tới nơi. Vui lòng kiểm tra và xác nhận.",
+      dateTime: "2023-11-15 12:30",
+    },
+    {
+      id: 3,
+      image:
+        "https://luxuryhanoi.vn/admin/timthumb.php?src=img/product/20230221145212e6c439226a0bde3e060ac5ce39b7d0f2.png&w=460",
+      title: "Cập nhật đơn hàng",
+      description:
+        "Đơn hàng Rolex Deepsea Challenge 126067 RLX Titanium của bạn đã bị hủy. Phí thanh toán sẽ được hoàn lại ví trong thời gian ngắn. Vui lòng kiểm tra và xác nhận.",
+      dateTime: "2023-11-15 15:45",
+    },
+    {
+      id: 4,
+      image:
+        "https://frodos.com.vn/wp-content/uploads/2022/11/dr0-600x800.png.webp",
+      title: "Cập nhật đơn hàng",
+      description:
+        "Đơn hàng Richard Mille RM57-01 Dragon and Phoenix Jackie Chan Tourbillon của bạn đã được vận chuyển. Bạn sẽ nhận được hàng trong 3-5 ngày tới.",
+      dateTime: "2023-11-15 10:00",
+    },
+    {
+      id: 5,
+      image:
+        "https://static.patek.com/images/articles/gallery/2200/7118_1451G_001_8.jpg",
+      title: "Cập nhật đơn hàng",
+      description:
+        "Đơn hàng Patek Philippe NAUTILUS 7118/1451G-001 của bạn đã tới nơi. Vui lòng kiểm tra và xác nhận.",
+      dateTime: "2023-11-15 12:30",
+    },
+    {
+      id: 6,
+      image:
+        "https://luxuryhanoi.vn/admin/timthumb.php?src=img/product/20230221145212e6c439226a0bde3e060ac5ce39b7d0f2.png&w=460",
+      title: "Cập nhật đơn hàng",
+      description:
+        "Đơn hàng Rolex Deepsea Challenge 126067 RLX Titanium của bạn đã bị hủy. Phí thanh toán sẽ được hoàn lại ví trong thời gian ngắn. Vui lòng kiểm tra và xác nhận.",
+      dateTime: "2023-11-15 15:45",
+    },
+    {
+      id: 7,
+      image:
+        "https://frodos.com.vn/wp-content/uploads/2022/11/dr0-600x800.png.webp",
+      title: "Cập nhật đơn hàng",
+      description:
+        "Đơn hàng Richard Mille RM57-01 Dragon and Phoenix Jackie Chan Tourbillon của bạn đã được vận chuyển. Bạn sẽ nhận được hàng trong 3-5 ngày tới.",
+      dateTime: "2023-11-15 10:00",
+    },
+    {
+      id: 8,
+      image:
+        "https://static.patek.com/images/articles/gallery/2200/7118_1451G_001_8.jpg",
+      title: "Cập nhật đơn hàng",
+      description:
+        "Đơn hàng Patek Philippe NAUTILUS 7118/1451G-001 của bạn đã tới nơi. Vui lòng kiểm tra và xác nhận.",
+      dateTime: "2023-11-15 12:30",
+    },
+    {
+      id: 9,
+      image:
+        "https://luxuryhanoi.vn/admin/timthumb.php?src=img/product/20230221145212e6c439226a0bde3e060ac5ce39b7d0f2.png&w=460",
+      title: "Cập nhật đơn hàng",
+      description:
+        "Đơn hàng Rolex Deepsea Challenge 126067 RLX Titanium của bạn đã bị hủy. Phí thanh toán sẽ được hoàn lại ví trong thời gian ngắn. Vui lòng kiểm tra và xác nhận.",
+      dateTime: "2023-11-15 15:45",
+    },
+    {
+      id: 10,
+      image:
+        "https://frodos.com.vn/wp-content/uploads/2022/11/dr0-600x800.png.webp",
+      title: "Cập nhật đơn hàng",
+      description:
+        "Đơn hàng Richard Mille RM57-01 Dragon and Phoenix Jackie Chan Tourbillon của bạn đã được vận chuyển. Bạn sẽ nhận được hàng trong 3-5 ngày tới.",
+      dateTime: "2023-11-15 10:00",
+    },
+    {
+      id: 11,
+      image:
+        "https://static.patek.com/images/articles/gallery/2200/7118_1451G_001_8.jpg",
+      title: "Cập nhật đơn hàng",
+      description:
+        "Đơn hàng Patek Philippe NAUTILUS 7118/1451G-001 của bạn đã tới nơi. Vui lòng kiểm tra và xác nhận.",
+      dateTime: "2023-11-15 12:30",
+    },
+    {
+      id: 12,
+      image:
+        "https://luxuryhanoi.vn/admin/timthumb.php?src=img/product/20230221145212e6c439226a0bde3e060ac5ce39b7d0f2.png&w=460",
+      title: "Cập nhật đơn hàng",
+      description:
+        "Đơn hàng Rolex Deepsea Challenge 126067 RLX Titanium của bạn đã bị hủy. Phí thanh toán sẽ được hoàn lại ví trong thời gian ngắn. Vui lòng kiểm tra và xác nhận.",
+      dateTime: "2023-11-15 15:45",
+    },
     // Thêm các thông báo khác theo định dạng tương tự
   ]);
 
@@ -28,10 +131,11 @@ const Notification = () => {
 
   const handleDelete = (notificationId) => {
     // Xử lý xóa thông báo với ID tương ứng
-    const updatedNotifications = notifications.filter((item) => item.id !== notificationId);
+    const updatedNotifications = notifications.filter(
+      (item) => item.id !== notificationId
+    );
     setNotifications(updatedNotifications);
   };
-
 
   const renderSwipeoutButton = () => [
     {
