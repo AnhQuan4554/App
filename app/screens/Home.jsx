@@ -10,7 +10,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import Header from "../../components/Header";
-const Home = () => {
+const Home = ({ arrProduct }) => {
   const navigation = useNavigation();
   const [products, setProducts] = useState([
     {
@@ -49,7 +49,9 @@ const Home = () => {
       price: 1000,
     },
   ]);
-
+  useEffect(() => {
+    arrProduct && setProducts(arrProduct);
+  }, [arrProduct]);
   return (
     <View style={styles.container}>
       <Header
