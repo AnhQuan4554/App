@@ -10,9 +10,7 @@ import {
 import React, { useState } from "react";
 import Header from "../../components/Header";
 import { useNavigation, useRoute } from "@react-navigation/native";
-// import CustomButton from "../common/CustomButton";
-// import AsyncStorage from "@react-native-async-storage/async-storage";
-// import AskForLoginModal from "../common/AskForLoginModal";
+import axios from "axios";
 const ProductDetail = () => {
   const navigation = useNavigation();
   const route = useRoute();
@@ -31,6 +29,26 @@ const ProductDetail = () => {
   //     console.log(isUserLoggedIn);
   //     return isUserLoggedIn;
   //   };
+  const handleBuyPress = () => {};
+  const handleAddToCartPress = async () => {
+    console.log("add to cart");
+    const url = `${process.env.domain}/order/creat-cart`;
+    const { id, ...newProductData } = route.params.data;
+
+    newProductData["email"] = "test22@gmail.com";
+    newProductData["qty"] = qty;
+    newProductData["description"] =
+      "Khi đánh giá tổng quan về dòng máy Microsoft Surface ";
+    console.log("new Data", newProductData);
+    try {
+      const response = await axios.post(url, newProductData);
+      console.log("Product added:", response && response.config.data);
+      return response.data;
+    } catch (error) {
+      console.error("Error adding product:", error);
+      throw error;
+    }
+  };
   return (
     <View style={styles.container}>
       <Header
@@ -42,7 +60,7 @@ const ProductDetail = () => {
         }}
         isCart={true}
       />
-      <ScrollView>
+      <ScrollView style={styles.container}>
         <Image
           source={{ uri: route.params.data.image }}
           style={styles.banner}
@@ -80,45 +98,18 @@ const ProductDetail = () => {
             style={styles.icon}
           />
         </TouchableOpacity>
-        {/* 
-        <CustomButton
-          bg={"#FF9A0C"}
-          title={"Add To Cart"}
-          color={"#fff"}
-          onClick={() => {
-            if (checkUserStatus()) {
-              dispatch(
-                addItemToCart({
-                  category: route.params.data.category,
-                  description: route.params.data.description,
-                  id: route.params.data.id,
-                  image: route.params.data.image,
-                  price: route.params.data.price,
-                  qty: qty,
-                  rating: route.params.data.rating,
-                  title: route.params.data.title,
-                })
-              );
-            } else {
-              setModalVisible(true);
-            }
-          }}
-        /> */}
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.buyButton} onPress={handleBuyPress}>
+            <Text style={styles.buttonText}>Mua</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.addToCartButton}
+            onPress={handleAddToCartPress}
+          >
+            <Text style={styles.buttonText}>Thêm vào giỏ hàng</Text>
+          </TouchableOpacity>
+        </View>
       </ScrollView>
-      {/* <AskForLoginModal
-        modalVisible={modalVisible}
-        onClickLogin={() => {
-          setModalVisible(false);
-          navigation.navigate("Login");
-        }}
-        onClose={() => {
-          setModalVisible(false);
-        }}
-        onClickSignup={() => {
-          setModalVisible(false);
-          navigation.navigate("Signup");
-        }}
-      /> */}
     </View>
   );
 };
@@ -128,6 +119,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
+    flexGrow: 1,
   },
   banner: {
     width: "100%",
@@ -188,5 +180,27 @@ const styles = StyleSheet.create({
   qty: {
     marginLeft: 10,
     fontSize: 18,
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-evenly", // Canh các nút đều nhau theo chiều ngang
+    marginTop: 20,
+  },
+  buyButton: {
+    backgroundColor: "#3498db",
+    width: "40%",
+    borderRadius: 8,
+    paddingVertical: 10,
+  },
+  addToCartButton: {
+    backgroundColor: "#2ecc71",
+    width: "40%",
+    borderRadius: 8,
+    paddingVertical: 10,
+  },
+  buttonText: {
+    color: "#fff",
+    textAlign: "center",
+    fontWeight: "bold",
   },
 });

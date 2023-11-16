@@ -8,16 +8,14 @@ import {
   FlatList,
   Dimensions,
 } from "react-native";
-import React, { useEffect, useState } from "react";
 import Header from "./Header";
+import React, { useEffect, useState } from "react";
+import { useNavigation } from "@react-navigation/native";
 
 const Search = ({ arrProduct }) => {
-  // const products = useSelector(state => state);
+  const navigation = useNavigation();
   const [search, setSearch] = useState("");
-  // const [oldData, setOldData] = useState(products.product.data);
-
   const [oldData, setOldData] = useState(arrProduct && arrProduct);
-
   const [searchedList, setSearchedList] = useState(oldData);
   const filterData = (txt) => {
     let newData = oldData.filter((item) => {
@@ -75,9 +73,9 @@ const Search = ({ arrProduct }) => {
                 key={index}
                 activeOpacity={1}
                 style={styles.productItem}
-                // onPress={() => {
-                //   navigation.navigate("ProductDetail", { data: item });
-                // }}
+                onPress={() => {
+                  navigation.navigate("ProductDetail", { data: item });
+                }}
               >
                 <Image source={{ uri: item.image }} style={styles.itemImage} />
                 <View>

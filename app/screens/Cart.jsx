@@ -10,42 +10,22 @@ import {
 import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import { useNavigation } from "@react-navigation/native";
-
+import axios from "axios";
 // import CheckoutLayout from "../common/CheckoutLayout";
 
 const Cart = () => {
   const navigation = useNavigation();
   // const items = useSelector(state => state.cart);
-  const [cartItems, setCartItems] = useState([
-    {
-      image:
-        "https://anhdepfree.com/wp-content/uploads/2018/12/hinh-nen-phong-canh-thien-nhien-67.jpg",
-      title: "Day la cai lol qu gi",
-      description: "Test descriptiondescriptiondes",
-      price: 1000,
-      qty: 2,
-    },
-    {
-      image:
-        "https://anhdepfree.com/wp-content/uploads/2018/12/hinh-nen-phong-canh-thien-nhien-67.jpg",
-      title: "Day la cai lol qu gi",
-      description: "Test descriptiondescriptiondes",
-      price: 1000,
-      qty: 3,
-    },
-    {
-      image:
-        "https://anhdepfree.com/wp-content/uploads/2018/12/hinh-nen-phong-canh-thien-nhien-67.jpg",
-      title: "Day la cai lol qu gi",
-      description: "Test descriptiondescriptiondes",
-      price: 1000,
-      qty: 1,
-    },
-  ]);
-
-  // useEffect(() => {
-  //   setCartItems(items.data);
-  // }, [items]);
+  const [cartItems, setCartItems] = useState([]);
+  const fetchUser = async () => {
+    const url = `${process.env.domain}/order/carts`;
+    const response = await axios.get(url);
+    response.data && setCartItems(response.data);
+    // response.data && console.log("all Cart cartItems", cartItems);
+  };
+  useEffect(() => {
+    fetchUser();
+  }, []);
 
   const getTotal = () => {
     let total = 0;
