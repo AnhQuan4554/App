@@ -1,12 +1,31 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../../../components/Header";
-
+import { useNavigation, useRoute } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const User = () => {
+  const navigation = useNavigation();
+  const [userEmail, setUserEmail] = useState("");
+  ///
   const logout = async () => {
-    // await AsyncStorage.removeItem('IS_USER_LOGGED_IN');
-    // navigation.navigate('Login');
+    await AsyncStorage.removeItem("userEmail");
+    navigation.navigate("Login");
   };
+  const getUserEmail = async () => {
+    try {
+      const value = await AsyncStorage.getItem("userEmail");
+      if (value) {
+        setUserEmail(value);
+        console.log("user Email is", userEmail);
+      }
+    } catch (error) {
+      console.log("no Value");
+      // Error retrieving data
+    }
+  };
+  useEffect(() => {
+    getUserEmail();
+  });
   return (
     <View style={styles.container}>
       <Header title={"Profile"} />
@@ -14,10 +33,7 @@ const User = () => {
         source={require("../../../assets/images/default_user.png")}
         style={styles.user}
       />
-      <Text style={styles.name}>{"Quan Nguyen"}</Text>
-      <Text style={[styles.name, { fontSize: 16, marginTop: 0 }]}>
-        {"quannguyen@gmail.com"}
-      </Text>
+      <Text style={styles.name}>{userEmail}</Text>
       <TouchableOpacity style={[styles.tab, { marginTop: 40 }]}>
         <Text style={styles.txt}>Edit Profile</Text>
       </TouchableOpacity>

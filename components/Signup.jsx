@@ -1,33 +1,31 @@
 import { View, Text, StyleSheet, TextInput } from "react-native";
 import React, { useState } from "react";
-import CustomButton from "../../../components/CustomButton";
-// import { useNavigation } from "@react-navigation/native";
-// import firestore from "@react-native-firebase/firestore";
-// import uuid from "react-native-uuid";
+import CustomButton from "./CustomButton";
+import { useNavigation } from "@react-navigation/native";
+import axios from "axios";
 const Signup = () => {
   const navigation = useNavigation();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [mobile, setMobile] = useState("");
-  const [pass, setPass] = useState("");
+  const [phone, setPhone] = useState("");
+  const [password, setPassword] = useState("");
   const [confirmPass, setConfirmPass] = useState("");
-  // const addUser = () => {
-  //   let uid = uuid.v4();
-  //   firestore()
-  //     .collection("Users")
-  //     .doc(uid)
-  //     .set({
-  //       name: name,
-  //       email: email,
-  //       mobile: mobile,
-  //       password: pass,
-  //       userId: uid,
-  //     })
-  //     .then(() => {
-  //       console.log("User added!");
-  //       navigation.navigate("Login");
-  //     });
-  // };
+  const addUser = async () => {
+    console.log("envs Sign up 11ss/17", process.env.domain);
+    const url = `${process.env.domain}/users/creat-user`;
+    const newUser = { name, password, email, phone };
+    console.log("new User", newUser);
+    try {
+      const response = await axios.post(url, newUser);
+      // console.log("Product added:", response && response.config.data);
+      if (response.config.data) {
+        navigation.navigate("Login");
+      }
+    } catch (error) {
+      console.error("Error adding new User:", error);
+      throw error;
+    }
+  };
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{"Sign up"}</Text>
@@ -46,14 +44,14 @@ const Signup = () => {
       <TextInput
         placeholder="Enter Mobile"
         style={styles.input}
-        value={mobile}
-        onChangeText={(txt) => setMobile(txt)}
+        value={phone}
+        onChangeText={(txt) => setPhone(txt)}
       />
       <TextInput
         placeholder="Enter password"
         style={styles.input}
-        value={pass}
-        onChangeText={(txt) => setPass(txt)}
+        value={password}
+        onChangeText={(txt) => setPassword(txt)}
       />
       <TextInput
         placeholder="Enter Confirm Password"

@@ -10,42 +10,22 @@ import {
 import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import { useNavigation } from "@react-navigation/native";
-
+import axios from "axios";
 // import CheckoutLayout from "../common/CheckoutLayout";
 
 const Cart = () => {
   const navigation = useNavigation();
-  // const items = useSelector(state => state.cart);
-  const [cartItems, setCartItems] = useState([
-    {
-      image:
-        "https://anhdepfree.com/wp-content/uploads/2018/12/hinh-nen-phong-canh-thien-nhien-67.jpg",
-      title: "Day la cai lol qu gi",
-      description: "Test descriptiondescriptiondes",
-      price: 1000,
-      qty: 2,
-    },
-    {
-      image:
-        "https://anhdepfree.com/wp-content/uploads/2018/12/hinh-nen-phong-canh-thien-nhien-67.jpg",
-      title: "Day la cai lol qu gi",
-      description: "Test descriptiondescriptiondes",
-      price: 1000,
-      qty: 3,
-    },
-    {
-      image:
-        "https://anhdepfree.com/wp-content/uploads/2018/12/hinh-nen-phong-canh-thien-nhien-67.jpg",
-      title: "Day la cai lol qu gi",
-      description: "Test descriptiondescriptiondes",
-      price: 1000,
-      qty: 1,
-    },
-  ]);
-
-  // useEffect(() => {
-  //   setCartItems(items.data);
-  // }, [items]);
+  const [cartItems, setCartItems] = useState([]);
+  const fetchUser = async () => {
+    console.log("env in carts 11/17ss", process.env.domain);
+    const url = `${process.env.domain}/order/carts`;
+    const response = await axios.get(url);
+    response.data && setCartItems(response.data);
+    // response.data && console.log("all Cart cartItems", cartItems);
+  };
+  useEffect(() => {
+    fetchUser();
+  }, []);
 
   const getTotal = () => {
     let total = 0;
@@ -53,6 +33,16 @@ const Cart = () => {
       total = total + item.qty * item.price;
     });
     return total.toFixed(0);
+  };
+  const handleDeleteCart = async (id) => {
+    const url = `${process.env.domain}/order/delete-cart/${id}`;
+    try {
+      console.log(";url", url);
+      const response = await axios.delete(url);
+      navigation.navigate("DeleteSuccess");
+    } catch (error) {
+      console.log("Lỗi khi Xóa Notify", error);
+    }
   };
   return (
     <View style={styles.container}>
@@ -92,23 +82,42 @@ const Cart = () => {
                   <TouchableOpacity
                     style={styles.btn}
                     onPress={() => {
-                      //   if (item.qty > 1) {
-                      //     dispatch(reduceItemFromCart(item));
-                      //   } else {
-                      //     dispatch(removeItemFromCart(index));
-                      //   }
+                      console.log(item.id);
+                      // handleDeleteCart(id);
                     }}
                   >
-                    <Text style={{ fontSize: 18, fontWeight: "600" }}>-</Text>
+                    <Text
+                      style={{
+                        fontSize: 12,
+                        fontWeight: "600",
+                        color: "green",
+                      }}
+                    >
+                      Buy
+                    </Text>
                   </TouchableOpacity>
-                  <Text style={styles.qty}>{item.qty}</Text>
+
                   <TouchableOpacity
                     style={styles.btn}
                     onPress={() => {
                       //   dispatch(addItemToCart(item));
                     }}
                   >
-                    <Text style={{ fontSize: 18, fontWeight: "600" }}>+</Text>
+                    <Text style={{ fontSize: 12, fontWeight: "600" }}>
+                      Detail
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.btn}
+                    onPress={() => {
+                      handleDeleteCart(item.id);
+                    }}
+                  >
+                    <Text
+                      style={{ fontSize: 12, fontWeight: "600", color: "red" }}
+                    >
+                      Delete
+                    </Text>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -170,7 +179,7 @@ const styles = StyleSheet.create({
   },
   btn: {
     padding: 5,
-    width: 30,
+    width: 50,
     justifyContent: "center",
     alignItems: "center",
     borderWidth: 0.5,
