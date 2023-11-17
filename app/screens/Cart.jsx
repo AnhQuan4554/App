@@ -15,9 +15,9 @@ import axios from "axios";
 
 const Cart = () => {
   const navigation = useNavigation();
-  // const items = useSelector(state => state.cart);
   const [cartItems, setCartItems] = useState([]);
   const fetchUser = async () => {
+    console.log("env in carts 11/17ss", process.env.domain);
     const url = `${process.env.domain}/order/carts`;
     const response = await axios.get(url);
     response.data && setCartItems(response.data);
@@ -33,6 +33,16 @@ const Cart = () => {
       total = total + item.qty * item.price;
     });
     return total.toFixed(0);
+  };
+  const handleDeleteCart = async (id) => {
+    const url = `${process.env.domain}/order/delete-cart/${id}`;
+    try {
+      console.log(";url", url);
+      const response = await axios.delete(url);
+      navigation.navigate("DeleteSuccess");
+    } catch (error) {
+      console.log("Lỗi khi Xóa Notify", error);
+    }
   };
   return (
     <View style={styles.container}>
@@ -72,23 +82,42 @@ const Cart = () => {
                   <TouchableOpacity
                     style={styles.btn}
                     onPress={() => {
-                      //   if (item.qty > 1) {
-                      //     dispatch(reduceItemFromCart(item));
-                      //   } else {
-                      //     dispatch(removeItemFromCart(index));
-                      //   }
+                      console.log(item.id);
+                      // handleDeleteCart(id);
                     }}
                   >
-                    <Text style={{ fontSize: 18, fontWeight: "600" }}>-</Text>
+                    <Text
+                      style={{
+                        fontSize: 12,
+                        fontWeight: "600",
+                        color: "green",
+                      }}
+                    >
+                      Buy
+                    </Text>
                   </TouchableOpacity>
-                  <Text style={styles.qty}>{item.qty}</Text>
+
                   <TouchableOpacity
                     style={styles.btn}
                     onPress={() => {
                       //   dispatch(addItemToCart(item));
                     }}
                   >
-                    <Text style={{ fontSize: 18, fontWeight: "600" }}>+</Text>
+                    <Text style={{ fontSize: 12, fontWeight: "600" }}>
+                      Detail
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.btn}
+                    onPress={() => {
+                      handleDeleteCart(item.id);
+                    }}
+                  >
+                    <Text
+                      style={{ fontSize: 12, fontWeight: "600", color: "red" }}
+                    >
+                      Delete
+                    </Text>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -150,7 +179,7 @@ const styles = StyleSheet.create({
   },
   btn: {
     padding: 5,
-    width: 30,
+    width: 50,
     justifyContent: "center",
     alignItems: "center",
     borderWidth: 0.5,

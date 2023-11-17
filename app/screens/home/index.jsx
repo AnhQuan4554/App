@@ -38,7 +38,7 @@ const HomeScreen = () => {
     };
   }, []);
   const fetchUser = async () => {
-    console.log("env1", process.env.domain);
+    console.log("env11/17yysss", process.env.domain);
     const url = `${process.env.domain}/product`;
     const response = await axios.get(url);
     response.data && setarrProduct(response.data);

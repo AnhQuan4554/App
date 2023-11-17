@@ -7,46 +7,80 @@ import {
   ScrollView,
   Alert,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 const ProductDetail = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const [qty, setQty] = useState(1);
-  const [modalVisible, setModalVisible] = useState(false);
+  const [userEmail, setUserEmail] = useState("");
+  const getUserEmail = async () => {
+    try {
+      const value = await AsyncStorage.getItem("userEmail");
+      if (value) {
+        setUserEmail(value);
+        console.log("user Email is", userEmail);
+      }
+    } catch (error) {
+      console.log("no Value");
+      // Error retrieving data
+    }
+  };
+  useEffect(() => {
+    getUserEmail();
+  });
+  const handleBuyPress = async () => {
+    console.log("envs11/17ss", process.env.domain);
+    const url = `${process.env.domain}/order/creat-order`;
+    const { id, ...newProductData } = route.params.data;
 
-  //   const checkUserStatus = async () => {
-  //     let isUserLoggedIn = false;
-  //     const status = await AsyncStorage.getItem("IS_USER_LOGGED_IN");
-  //     console.log(status);
-  //     if (status == null) {
-  //       isUserLoggedIn = false;
-  //     } else {
-  //       isUserLoggedIn = true;
-  //     }
-  //     console.log(isUserLoggedIn);
-  //     return isUserLoggedIn;
-  //   };
-  const handleBuyPress = () => {};
+    newProductData["email"] = userEmail || "testOrder@gmail.com";
+    newProductData["qty"] = qty;
+    newProductData["description"] =
+      newProductData["description"] ||
+      "Khi đánh giá tổng quan về dòng máy Microsoft Surface ";
+    if (userEmail) {
+      console.log("user Email", userEmail);
+      try {
+        const response = await axios.post(url, newProductData);
+        console.log("Order added:", response && response.config.data);
+        if (response.config.data) {
+          navigation.navigate("OrderSuccess");
+        }
+      } catch (error) {
+        console.error("Error adding Order:", error);
+        throw error;
+      }
+    } else {
+      navigation.navigate("Login");
+    }
+  };
   const handleAddToCartPress = async () => {
-    console.log("add to cart");
+    console.log("envs11/17", process.env.domain);
     const url = `${process.env.domain}/order/creat-cart`;
     const { id, ...newProductData } = route.params.data;
 
-    newProductData["email"] = "test22@gmail.com";
+    newProductData["email"] = userEmail || "test22@gmail.com";
     newProductData["qty"] = qty;
     newProductData["description"] =
+      newProductData["description"] ||
       "Khi đánh giá tổng quan về dòng máy Microsoft Surface ";
-    console.log("new Data", newProductData);
-    try {
-      const response = await axios.post(url, newProductData);
-      console.log("Product added:", response && response.config.data);
-      return response.data;
-    } catch (error) {
-      console.error("Error adding product:", error);
-      throw error;
+    if (userEmail) {
+      try {
+        const response = await axios.post(url, newProductData);
+        // console.log("Product added:", response && response.config.data);
+        if (response.config.data) {
+          navigation.navigate("OrderSuccess");
+        }
+      } catch (error) {
+        console.error("Error adding product:", error);
+        throw error;
+      }
+    } else {
+      navigation.navigate("Login");
     }
   };
   return (
