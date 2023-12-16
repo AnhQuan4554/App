@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import Swipeout from "react-native-swipeout";
 import axios from "axios";
+import { DOMAIN } from "@env";
 const Notification = () => {
   const [notifications, setNotifications] = useState([
     // Thêm các thông báo khác theo định dạng tương tự
@@ -16,7 +17,7 @@ const Notification = () => {
 
   const handleNotificationPress = (notification) => {
     // Xử lý khi người dùng nhấn vào một thông báo
-    console.log("Notification pressed:", notification.title);
+    console.log("Notification press", notification.title);
     // Ví dụ: Chuyển đến trang chi tiết thông báo
     // navigation.navigate('NotificationDetail', { notification });
   };
@@ -37,8 +38,8 @@ const Notification = () => {
     },
   ];
   const fetchNotify = async () => {
-    console.log("process.env. notify11/17ss", url);
-    const url = `${process.env.domain}/notifycation`;
+    console.log("DOMAIN", DOMAIN);
+    const url = `${DOMAIN}/notifycation`;
     const response = await axios.get(url);
     response.data && setNotifications(response.data);
   };

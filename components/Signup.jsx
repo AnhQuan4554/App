@@ -3,17 +3,19 @@ import React, { useState } from "react";
 import CustomButton from "./CustomButton";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
+import { DOMAIN } from "@env";
 const Signup = () => {
   const navigation = useNavigation();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
+  const [address, setAddress] = useState("");
   const [confirmPass, setConfirmPass] = useState("");
   const addUser = async () => {
-    console.log("envs Sign up 11ss/17", process.env.domain);
-    const url = `${process.env.domain}/users/creat-user`;
-    const newUser = { name, password, email, phone };
+    console.log("DOMAIN", DOMAIN);
+    const url = `${DOMAIN}/users/creat-user`;
+    const newUser = { name, password, email, address, phone };
     console.log("new User", newUser);
     try {
       const response = await axios.post(url, newUser);
@@ -40,6 +42,12 @@ const Signup = () => {
         style={styles.input}
         value={email}
         onChangeText={(txt) => setEmail(txt)}
+      />
+      <TextInput
+        placeholder="Enter Address"
+        style={styles.input}
+        value={address}
+        onChangeText={(txt) => setAddress(txt)}
       />
       <TextInput
         placeholder="Enter Mobile"

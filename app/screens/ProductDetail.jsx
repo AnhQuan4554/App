@@ -12,6 +12,7 @@ import Header from "../../components/Header";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
+import { DOMAIN } from "@env";
 const ProductDetail = () => {
   const navigation = useNavigation();
   const route = useRoute();
@@ -33,8 +34,8 @@ const ProductDetail = () => {
     getUserEmail();
   });
   const handleBuyPress = async () => {
-    console.log("envs11/17ss", process.env.domain);
-    const url = `${process.env.domain}/order/creat-order`;
+    console.log("DOMAIN", DOMAIN);
+    const url = `${DOMAIN}/order/creat-order`;
     const { id, ...newProductData } = route.params.data;
 
     newProductData["email"] = userEmail || "testOrder@gmail.com";
@@ -59,8 +60,8 @@ const ProductDetail = () => {
     }
   };
   const handleAddToCartPress = async () => {
-    console.log("envs11/17", process.env.domain);
-    const url = `${process.env.domain}/order/creat-cart`;
+    console.log("envs11/17", DOMAIN);
+    const url = `${DOMAIN}/order/creat-cart`;
     const { id, ...newProductData } = route.params.data;
 
     newProductData["email"] = userEmail || "test22@gmail.com";

@@ -4,13 +4,14 @@ import CustomButton from "./CustomButton";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
+import { DOMAIN } from "@env";
 const Login = () => {
   const navigation = useNavigation();
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
   const loginUser = async () => {
-    console.log("envs Login 11/17ss22", process.env.domain);
-    const url = `${process.env.domain}/users/check-user`;
+    console.log("DOMAIN", DOMAIN);
+    const url = `${DOMAIN}/users/check-user`;
     try {
       const userCheck = { email, pass };
       const response = await axios.post(url, userCheck);

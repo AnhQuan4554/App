@@ -14,5 +14,4 @@ const Main = () => {
     </Drawer.Navigator>
   );
 };
-
 export default Main;

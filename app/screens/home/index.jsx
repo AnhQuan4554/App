@@ -14,6 +14,7 @@ import Wishlist from "../Wishlist";
 import Notification from "../Notification";
 import User from "../User";
 import axios from "axios";
+import { DOMAIN } from "@env";
 const HomeScreen = () => {
   const [selectedTab, setSelectedTab] = useState(0);
   const [arrProduct, setarrProduct] = useState([]);
@@ -38,8 +39,8 @@ const HomeScreen = () => {
     };
   }, []);
   const fetchUser = async () => {
-    console.log("env11/17yysss", process.env.domain);
-    const url = `${process.env.domain}/product`;
+    console.log("DOMAIN", DOMAIN);
+    const url = `${DOMAIN}/product`;
     const response = await axios.get(url);
     response.data && setarrProduct(response.data);
     response.data && console.log("arrData1", arrProduct);

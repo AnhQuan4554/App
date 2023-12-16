@@ -4,40 +4,17 @@ import Header from "../../components/Header";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
+import { DOMAIN } from "@env";
 const Orders = () => {
   const navigation = useNavigation();
   const [userEmail, setUserEmail] = useState("");
-  const [ordersList, setOrdersList] = useState([
-    {
-      created_at: "11/17/2023",
-      description: "dsa",
-      email: "quanmanu@gmail.com",
-      id: 18,
-      image: "https://laptopaz.vn/media/product/3042_2851_untitled_1_copy.jpg",
-      price: 23,
-      qty: 1,
-      title: "Lenovo LOQ 2023 ",
-    },
-    {
-      created_at: "11/17/2023",
-      description: "dsa",
-      email: "quanmanu@gmail.com",
-      id: 19,
-      image: "https://laptopaz.vn/media/product/3042_2851_untitled_1_copy.jpg",
-      price: 23,
-      qty: 1,
-      title: "Lenovo LOQ 2023 ",
-    },
-  ]);
+  const [ordersList, setOrdersList] = useState([]);
   const fetchData = async (userEmail) => {
-    console.log("envs Order 11/17sss", process.env.domain);
+    console.log("DOMAIN", DOMAIN);
 
-    const url = `${process.env.domain}/order/get-by-email/${userEmail}`;
+    const url = `${DOMAIN}/order/get-by-email/${userEmail}`;
     try {
-      console.log("duownng dan url", url);
       const response = await axios.post(url);
-
-      console.log("All Orrder:", response && response.data);
       response.data && setOrdersList(response.data);
     } catch (error) {
       console.error("Error adding Orders:", error);
@@ -75,29 +52,36 @@ const Orders = () => {
       />
 
       <View style={styles.orderItem}>
-        <FlatList
-          data={ordersList}
-          renderItem={({ item, index }) => {
-            return (
-              <View style={styles.productItem}>
-                <Image source={{ uri: item.image }} style={styles.itemImage} />
-                <View style={styles.nameView}>
-                  <Text>
-                    {item.title.length > 20
-                      ? item.title.substring(0, 20)
-                      : item.title}
-                  </Text>
-                  <Text>
-                    {item.description.length > 30
-                      ? item.description.substring(0, 30)
-                      : item.description}
-                  </Text>
-                  <Text style={{ color: "green" }}>{"Rs." + item.price}</Text>
+        {ordersList && ordersList.length > 0 ? (
+          <FlatList
+            data={ordersList}
+            renderItem={({ item, index }) => {
+              return (
+                <View style={styles.productItem}>
+                  <Image
+                    source={{ uri: item.image }}
+                    style={styles.itemImage}
+                  />
+                  <View style={styles.nameView}>
+                    <Text>
+                      {item.title.length > 20
+                        ? item.title.substring(0, 20)
+                        : item.title}
+                    </Text>
+                    <Text>
+                      {item.description.length > 30
+                        ? item.description.substring(0, 30)
+                        : item.description}
+                    </Text>
+                    <Text style={{ color: "green" }}>{"Rs." + item.price}</Text>
+                  </View>
                 </View>
-              </View>
-            );
-          }}
-        />
+              );
+            }}
+          />
+        ) : (
+          <Text style={styles.noProductText}>Không có sản phẩm nào</Text>
+        )}
       </View>
     </View>
   );
@@ -131,5 +115,10 @@ const styles = StyleSheet.create({
   },
   nameView: {
     marginLeft: 10,
+  },
+  noProductText: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "red",
   },
 });

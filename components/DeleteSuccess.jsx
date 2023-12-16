@@ -14,10 +14,10 @@ const DeleteSuccess = () => {
       <Text
         style={styles.btn}
         onPress={() => {
-          navigation.navigate("Cart");
+          navigation.navigate("Main");
         }}
       >
-        Go TO Cart
+        Go TO Home
       </Text>
     </View>
   );
