@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TextInput, Alert } from "react-native";
+import { View, Text, StyleSheet, TextInput, Image,TouchableOpacity, Alert } from "react-native";
 import React, { useState } from "react";
 import CustomButton from "./CustomButton";
 import { useNavigation } from "@react-navigation/native";
@@ -43,24 +43,30 @@ const Login = () => {
   };
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{"Login"}</Text>
-
+    <TouchableOpacity>
+      <Image
+      source={require('../assets/images/Logolaptop.png')} // Đường dẫn đến ảnh trong dự án
+      style={styles.headerImage}
+      />
+      </TouchableOpacity>
+      <Text style={styles.title}>{"LOGIN FORM"}</Text>
+      <Text style={styles.title1}>{"UserName"}</Text>
       <TextInput
-        placeholder="Enter Email"
+        placeholder="Email or Username"
         style={styles.input}
         value={email}
         onChangeText={(txt) => setEmail(txt)}
       />
-
+      <Text style={styles.title1}>{"Password"}</Text>
       <TextInput
-        placeholder="Enter password"
+        placeholder="Password"
         style={styles.input}
         value={pass}
         onChangeText={(txt) => setPass(txt)}
       />
 
       <CustomButton
-        bg={"#E27800"}
+        bg={"#4a8cf7"}
         title={"Login"}
         color={"#fff"}
         onClick={() => {
@@ -85,12 +91,26 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
   },
+  headerImage: {
+    width: 200, // Đặt chiều rộng của ảnh
+    height: 200, // Đặt chiều cao của ảnh
+    marginLeft:100,
+    resizeMode: 'cover', // Có thể sử dụng 'contain', 'stretch', 'center', tùy thuộc vào yêu cầu của bạn
+  },
   title: {
     color: "#000",
-    fontSize: 40,
-    marginLeft: 20,
-    marginTop: 50,
-    marginBottom: 50,
+    fontSize: 50,
+    marginLeft: 55,
+    marginTop: 20,
+    marginBottom: 30,
+    fontWeight: "600",
+  },
+  title1: {
+    color: "#000",
+    fontSize: 20,
+    marginLeft: 25,
+    marginTop: 30,
+    fontWeight: "600",
   },
   input: {
     width: "90%",
@@ -105,6 +125,13 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginTop: 20,
     fontSize: 18,
-    textDecorationLine: "underline",
+    textDecorationLine: "none",
+    backgroundColor: "#4a8cf7",
+    width:370,
+    height:50,
+    textAlign: "center",
+    textAlignVertical: 'center',
+    color:"#fff",
+    borderRadius: 10,
   },
 });

@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TextInput } from "react-native";
+import { View, Text, StyleSheet, TextInput, Image,TouchableOpacity, Alert } from "react-native";
 import React, { useState } from "react";
 import CustomButton from "./CustomButton";
 import { useNavigation } from "@react-navigation/native";
@@ -30,9 +30,15 @@ const Signup = () => {
   };
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{"Sign up"}</Text>
+        <TouchableOpacity>
+      <Image
+      source={require('../assets/images/Logolaptop.png')} // Đường dẫn đến ảnh trong dự án
+      style={styles.headerImage}
+      />
+      </TouchableOpacity>
+      <Text style={styles.title}>{"SIGN UP FORM"}</Text>
       <TextInput
-        placeholder="Enter Name"
+        placeholder="Enter Username"
         style={styles.input}
         value={name}
         onChangeText={(txt) => setName(txt)}
@@ -68,7 +74,7 @@ const Signup = () => {
         onChangeText={(txt) => setConfirmPass(txt)}
       />
       <CustomButton
-        bg={"#E27800"}
+        bg={"#4a8cf7"}
         title={"Sign up"}
         color={"#fff"}
         onClick={() => {
@@ -95,10 +101,17 @@ const styles = StyleSheet.create({
   },
   title: {
     color: "#000",
-    fontSize: 40,
-    marginLeft: 20,
-    marginTop: 50,
-    marginBottom: 50,
+    fontSize: 50,
+    marginLeft: 35,
+    marginTop: 20,
+    marginBottom: 30,
+    fontWeight: "600",
+  },
+  headerImage: {
+    width: 150, // Đặt chiều rộng của ảnh
+    height: 150, // Đặt chiều cao của ảnh
+    marginLeft:120,
+    resizeMode: 'cover', // Có thể sử dụng 'contain', 'stretch', 'center', tùy thuộc vào yêu cầu của bạn
   },
   input: {
     width: "90%",
@@ -113,6 +126,13 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginTop: 20,
     fontSize: 18,
-    textDecorationLine: "underline",
+    textDecorationLine: "none",
+    backgroundColor: "#4a8cf7",
+    width:370,
+    height:50,
+    textAlign: "center",
+    textAlignVertical: 'center',
+    color:"#fff",
+    borderRadius: 10,
   },
 });

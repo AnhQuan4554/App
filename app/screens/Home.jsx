@@ -3,6 +3,7 @@ import {
   Text,
   StyleSheet,
   FlatList,
+  ScrollView,
   Dimensions,
   Image,
   TouchableOpacity,
@@ -18,7 +19,7 @@ const Home = ({ arrProduct }) => {
   }, [arrProduct]);
   return (
     <View style={styles.container}>
-      <Header
+      {/* <Header
         leftIcon={require("../../assets/images/menu.png")}
         rightIcon={require("../../assets/images/cart.png")}
         title={"Grocery App"}
@@ -26,7 +27,7 @@ const Home = ({ arrProduct }) => {
           navigation.openDrawer();
         }}
         isCart={true}
-      />
+      /> */}
       <FlatList
         data={products}
         renderItem={({ item, index }) => {
@@ -68,9 +69,11 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   productItem: {
+    flex: 1,
     width: Dimensions.get("window").width,
     height: 100,
     marginTop: 10,
+    paddingLeft:10,
     backgroundColor: "#fff",
     alignItems: "center",
     flexDirection: "row",
@@ -82,16 +85,19 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 18,
     fontWeight: "600",
-    marginLeft: 20,
+    marginLeft: 30,
   },
   desc: {
-    marginLeft: 20,
+    marginLeft: 30,
   },
   price: {
     color: "green",
     fontSize: 18,
     fontWeight: "600",
-    marginLeft: 20,
+    marginLeft: 30,
     marginTop: 5,
+  },
+  flatList: {
+    height: 1000, // Đặt chiều cao của FlatList ở đây, có thể sử dụng '80%' hoặc giá trị khác tùy thuộc vào yêu cầu của bạn
   },
 });
