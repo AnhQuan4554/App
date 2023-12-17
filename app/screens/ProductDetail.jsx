@@ -40,17 +40,16 @@ const ProductDetail = () => {
 
     newProductData["email"] = userEmail || "testOrder@gmail.com";
     newProductData["qty"] = qty;
-    newProductData["description"] =
-      newProductData["description"] ||
-      "Khi đánh giá tổng quan về dòng máy Microsoft Surface ";
+    newProductData["description"] = newProductData["description"] || "Khi";
     if (userEmail) {
-      console.log("user Email", userEmail);
       try {
-        const response = await axios.post(url, newProductData);
-        console.log("Order added:", response && response.config.data);
-        if (response.config.data) {
-          navigation.navigate("OrderSuccess");
-        }
+        console.log("newProductData++", newProductData);
+        navigation.navigate("OrderConfirm", { orderDetails: [newProductData] });
+        // const response = await axios.post(url, newProductData);
+        // console.log("Order added:", response && response.config.data);
+        // if (response.config.data) {
+        //   navigation.navigate("OrderSuccess");
+        // }
       } catch (error) {
         console.error("Error adding Order:", error);
         throw error;
@@ -60,7 +59,7 @@ const ProductDetail = () => {
     }
   };
   const handleAddToCartPress = async () => {
-    console.log("envs11/17", DOMAIN);
+    console.log("DOMAIN", DOMAIN);
     const url = `${DOMAIN}/order/creat-cart`;
     const { id, ...newProductData } = route.params.data;
 
@@ -72,7 +71,6 @@ const ProductDetail = () => {
     if (userEmail) {
       try {
         const response = await axios.post(url, newProductData);
-        // console.log("Product added:", response && response.config.data);
         if (response.config.data) {
           navigation.navigate("OrderSuccess");
         }

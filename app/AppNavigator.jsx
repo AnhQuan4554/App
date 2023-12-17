@@ -10,6 +10,7 @@ import Signup from "../components/Signup";
 import OrderSuccess from "../components/OrderSuccess";
 import DeleteSuccess from "../components/DeleteSuccess";
 import Orders from "./screens/Orders";
+import OrderConfirm from "../components/OrderConfirm";
 const Stack = createNativeStackNavigator();
 const AppNavigator = () => {
   return (
@@ -53,6 +54,11 @@ const AppNavigator = () => {
         <Stack.Screen
           name="Orders"
           component={Orders}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="OrderConfirm"
+          component={OrderConfirm}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

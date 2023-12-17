@@ -7,74 +7,51 @@ import {
   TouchableOpacity,
   Image,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
+import { DOMAIN } from "@env";
+import axios from "axios";
 
 const Wishlist = () => {
-  // const [wishlistItems, setWishlistItems] = useState(items.data);
-  const [wishlistItems, setWishlistItems] = useState([
-    {
-      image:
-        "https://anhdepfree.com/wp-content/uploads/2018/12/hinh-nen-phong-canh-thien-nhien-67.jpg",
-      title: "tesst title",
-      description: "tesst description",
-      price: 45,
-    },
-    {
-      image:
-        "https://hongbiencang.com/home/wp-content/uploads/2022/09/anh-dep-gai-xinh_025059121.png",
-      title: "tesst title",
-      description: "tesst description",
-      price: 45,
-    },
-    {
-      image:
-        "https://hongbiencang.com/home/wp-content/uploads/2022/09/anh-dep-gai-xinh_025059121.png",
-      title: "tesst title",
-      description: "tesst description",
-      price: 45,
-    },
-    {
-      image:
-        "https://hongbiencang.com/home/wp-content/uploads/2022/09/anh-dep-gai-xinh_025059121.png",
-      title: "tesst title",
-      description: "tesst description",
-      price: 45,
-    },
-  ]);
+  const [wishlistItems, setWishlistItems] = useState([]);
+  const fetchData = async () => {
+    console.log("DOMAIN", DOMAIN);
 
+    const url = `${DOMAIN}/order/best-seller`;
+    try {
+      const response = await axios.get(url);
+      response.data && setWishlistItems(response.data);
+    } catch (error) {
+      console.error("Error adding Orders:", error);
+      throw error;
+    }
+  };
+  const renderProductItem = ({ item }) => {
+    return (
+      <View style={styles.productItem}>
+        <Image source={{ uri: item.image }} style={styles.productImage} />
+        <View style={styles.productDetails}>
+          <Text style={styles.productTitle}>{item.title}</Text>
+          <Text style={styles.productDescription}>{item.description}</Text>
+          <Text style={styles.productPrice}>${item.price}</Text>
+          <Text style={styles.productQuantitySold}>
+            Sold Quantity: {item.totalQuantity}
+          </Text>
+        </View>
+      </View>
+    );
+  };
+  useEffect(() => {
+    fetchData();
+    console.log(wishlistItems);
+  }, []);
   return (
     <View style={styles.container}>
-      <Header title={"Wishlist Items"} />
+      <Text style={styles.heading}>Top Seller Products</Text>
       <FlatList
         data={wishlistItems}
-        renderItem={({ item, index }) => {
-          return (
-            <TouchableOpacity
-              key={index}
-              activeOpacity={1}
-              style={styles.productItem}
-              // onPress={() => {
-              //   navigation.navigate('ProductDetail', {data: item});
-              // }}
-            >
-              <Image source={{ uri: item.image }} style={styles.itemImage} />
-              <View>
-                <Text style={styles.name}>
-                  {item.title.length > 25
-                    ? item.title.substring(0, 25) + "..."
-                    : item.title}
-                </Text>
-                <Text style={styles.desc}>
-                  {item.description.length > 30
-                    ? item.description.substring(0, 30) + "..."
-                    : item.description}
-                </Text>
-                <Text style={styles.price}>{"$" + item.price}</Text>
-              </View>
-            </TouchableOpacity>
-          );
-        }}
+        renderItem={renderProductItem}
+        keyExtractor={(item, index) => index}
       />
     </View>
   );
@@ -84,33 +61,48 @@ export default Wishlist;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#ff",
+    padding: 10,
+  },
+  heading: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 20,
   },
   productItem: {
-    width: Dimensions.get("window").width,
-    height: 100,
-    marginTop: 10,
-    backgroundColor: "#fff",
-    alignItems: "center",
     flexDirection: "row",
+    alignItems: "center",
+    marginVertical: 10,
+    borderBottomWidth: 1, // Thêm viền dưới cho mỗi sản phẩm
+    borderBottomColor: "#ccc",
+    paddingBottom: 10,
   },
-  itemImage: {
+  productImage: {
     width: 100,
     height: 100,
+    resizeMode: "cover",
+    marginRight: 10,
   },
-  name: {
+  productDetails: {
+    flex: 1,
+    justifyContent: "center",
+  },
+  productTitle: {
     fontSize: 18,
-    fontWeight: "600",
-    marginLeft: 20,
+    fontWeight: "bold",
+    marginBottom: 5,
   },
-  desc: {
-    marginLeft: 20,
+  productDescription: {
+    fontSize: 16,
+    marginBottom: 5,
   },
-  price: {
+  productPrice: {
+    fontSize: 16,
+    fontWeight: "bold",
     color: "green",
-    fontSize: 18,
-    fontWeight: "600",
-    marginLeft: 20,
+  },
+  productQuantitySold: {
+    fontSize: 14,
+    color: "gray",
     marginTop: 5,
   },
 });
