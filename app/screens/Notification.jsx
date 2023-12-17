@@ -10,16 +10,29 @@ import {
 import Swipeout from "react-native-swipeout";
 import axios from "axios";
 import { DOMAIN } from "@env";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 const Notification = () => {
-  const [notifications, setNotifications] = useState([
-    // Thêm các thông báo khác theo định dạng tương tự
-  ]);
+  const [userEmail, setUserEmail] = useState("");
+
+  const [notifications, setNotifications] = useState([]);
 
   const handleNotificationPress = (notification) => {
     // Xử lý khi người dùng nhấn vào một thông báo
-    console.log("Notification press", notification.title);
     // Ví dụ: Chuyển đến trang chi tiết thông báo
     // navigation.navigate('NotificationDetail', { notification });
+  };
+  const getUserEmail = async () => {
+    try {
+      const value = await AsyncStorage.getItem("userEmail");
+      if (value) {
+        setUserEmail(value);
+        console.log("user Email is", userEmail);
+      }
+    } catch (error) {
+      console.log("no Values");
+      // Error retrieving data
+    }
   };
 
   const handleDelete = (notificationId) => {
@@ -37,15 +50,16 @@ const Notification = () => {
       onPress: () => handleDelete(item.id),
     },
   ];
-  const fetchNotify = async () => {
+  const fetchNotify = async (userEmail) => {
     console.log("DOMAIN", DOMAIN);
-    const url = `${DOMAIN}/notifycation`;
+    const url = `${DOMAIN}/notifycation/${userEmail}`;
     const response = await axios.get(url);
     response.data && setNotifications(response.data);
   };
   useEffect(() => {
-    fetchNotify();
-  }, []);
+    getUserEmail();
+    fetchNotify(userEmail);
+  }, [userEmail]);
 
   const renderItem = ({ item }) => (
     <View>
@@ -65,11 +79,17 @@ const Notification = () => {
   );
 
   return (
-    <FlatList
-      data={notifications}
-      keyExtractor={(item) => item.id.toString()}
-      renderItem={renderItem}
-    />
+    <>
+      {notifications && notifications.length > 0 ? (
+        <FlatList
+          data={notifications}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={renderItem}
+        />
+      ) : (
+        <Text>Không có thông báo nào</Text>
+      )}
+    </>
   );
 };
 
